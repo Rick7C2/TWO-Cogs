@@ -6,5 +6,5 @@
 	"NAME": "GCDecks",
 	"REQUIREMENTS": ["elasticsearch", "ruamel.yaml", "elasticsearch_async"],
 	"TAGS": ["Clash Royale"],
-	"INSTALL_MSG": "Thanks for installing. If you need help, please create new issue on my Github repo: <https://github.com/Rick7C2/TWO-Cogs>"
+	"INSTALL_MSG": "Thanks for installing. If you need help, please create new issue on my Github repo: <http://github.com/smlbiobot/SML-Cogs> or my Discord server: <http://discord.me/sml>"
 }
