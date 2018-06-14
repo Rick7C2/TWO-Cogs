@@ -6,5 +6,5 @@
 	"NAME": "Search",
 	"REQUIREMENTS": ["google", "imgurpython"],
 	"TAGS": ["search", "google", "imgur"],
-	"INSTALL_MSG": "Thank you for installing. Please add an issue on http://github.com/smlbiobot/SML-Cogs if you have an issue."
+	"INSTALL_MSG": "Thank you for installing. Please add an issue on https://github.com/Rick7C2/TWO-Cogs if you have an issue."
 }
