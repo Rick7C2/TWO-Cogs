@@ -1055,7 +1055,7 @@ class Settings:
     @property
     def auth(self):
         """Authentication token"""
-        return self.settings.get("auth")
+        return self.settings.get("auth", None)
 
     @auth.setter
     def auth(self, value):
