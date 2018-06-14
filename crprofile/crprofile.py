@@ -1131,6 +1131,7 @@ class CRProfile:
         """Set auth header"""
         self.model.auth = token
         await self.bot.say("Auth updated.")
+        await self.bot.delete_message(ctx.message)
 
     @crprofileset.command(name="official_auth", pass_context=True)
     async def crprofileset_auth(self, ctx, token):
