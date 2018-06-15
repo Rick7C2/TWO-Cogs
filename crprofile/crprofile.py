@@ -32,6 +32,7 @@ import os
 from collections import defaultdict, OrderedDict
 from datetime import timedelta
 from random import choice
+import socket
 
 import aiohttp
 import discord
@@ -82,7 +83,7 @@ class API:
     @staticmethod
     def player(tag):
         """Return player URL"""
-        return "http://api.royaleapi.com/player/" + tag.upper()
+        return "https://api.royaleapi.com/player/" + tag.upper()
 
 
 class Constants:
@@ -919,14 +920,19 @@ class Settings:
             chest_url = 'https://api.clashroyale.com/v1/players/%23{}/upcomingchests'.format(tag)
             headers = {"Authorization": 'Bearer {}'.format(self.official_auth)}
         else:
-            info_url = 'http://api.royaleapi.com/player/{}'.format(tag)
-            chest_url = 'http://api.royaleapi.com/player/{}/chests'.format(tag)
-            headers = {"auth": self.auth}
+            info_url = 'https://api.royaleapi.com/player/{}'.format(tag)
+            chest_url = 'https://api.royaleapi.com/player/{}/chests'.format(tag)
+            headers = {"Authorization": 'Bearer {}'.format(self.auth)}
+
+        conn = aiohttp.TCPConnector(
+            family=socket.AF_INET,
+            verify_ssl=False,
+        )
 
         try:
-            async with aiohttp.ClientSession() as session:
+            async with aiohttp.ClientSession(connector=conn) as session:
                 for url in [info_url, chest_url]:
-                    async with session.get(url, timeout=API_FETCH_TIMEOUT, headers=headers) as resp:
+                    async with session.get(url, headers=headers) as resp:
                         if resp.status != 200:
                             error = True
                         else:
@@ -1055,7 +1061,7 @@ class Settings:
     @property
     def auth(self):
         """Authentication token"""
-        return self.settings.get("auth", None)
+        return self.settings.get("auth")
 
     @auth.setter
     def auth(self, value):
@@ -1134,7 +1140,7 @@ class CRProfile:
         await self.bot.delete_message(ctx.message)
 
     @crprofileset.command(name="official_auth", pass_context=True)
-    async def crprofileset_auth(self, ctx, token):
+    async def crprofileset_official_auth(self, ctx, token):
         """Set auth header"""
         self.model.official_auth = token
         await self.bot.say("Auth updated.")
